@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Business Builder — Multi-Agent Startup Generator</title>
+  <meta name="description" content="Enter any business idea and watch 6 AI agents build your complete startup plan — market research, strategy, finance, tech, marketing, and pitch deck." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Animated background orbs -->
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div id="app">
+
+  <!-- ─── HERO ───────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="logo-badge">
+      <span class="dot"></span>
+      Powered by Gemini AI · 6-Agent Pipeline
+    </div>
+
+    <h1 class="hero-title">
+      AI Autonomous<br/>
+      <span class="gradient-text">Business Builder</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Enter your business idea. Watch 6 specialized AI agents collaborate
+      to build your complete startup plan — in minutes.
+    </p>
+
+    <div class="input-card">
+      <label class="input-label" for="businessIdea">Your Business Idea</label>
+      <textarea
+        id="businessIdea"
+        class="idea-input"
+        placeholder="e.g. &quot;I want to start a food delivery business for small towns&quot; or &quot;An AI-powered tutor for rural students&quot;..."
+        rows="4"
+      ></textarea>
+
+      <div class="api-key-row">
+        <input
+          id="apiKey"
+          type="text"
+          class="api-key-input"
+          placeholder="🔑 Grok API Key (xai-...)"
+          autocomplete="new-password"
+          spellcheck="false"
+        />
+        <button id="buildBtn" class="btn-build" onclick="startBuild()">
+          🚀 Build My Startup
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── AGENT PIPELINE ─────────────────────────────────────────────── -->
+  <section id="pipeline-section">
+    <h2 class="section-heading">🤖 Agent Pipeline Running</h2>
+    <p class="section-sub" id="pipelineStatus">Initializing agents...</p>
+
+    <div class="agents-grid">
+      <div class="agent-card" id="card-research" data-agent="research">
+        <span class="agent-icon">🔍</span>
+        <div class="agent-name">Research</div>
+        <div class="agent-status-badge" id="badge-research">Waiting</div>
+      </div>
+      <div class="agent-card" id="card-strategy" data-agent="strategy">
+        <span class="agent-icon">💼</span>
+        <div class="agent-name">Strategy</div>
+        <div class="agent-status-badge" id="badge-strategy">Waiting</div>
+      </div>
+      <div class="agent-card" id="card-finance" data-agent="finance">
+        <span class="agent-icon">📊</span>
+        <div class="agent-name">Finance</div>
+        <div class="agent-status-badge" id="badge-finance">Waiting</div>
+      </div>
+      <div class="agent-card" id="card-tech" data-agent="tech">
+        <span class="agent-icon">💻</span>
+        <div class="agent-name">Tech</div>
+        <div class="agent-status-badge" id="badge-tech">Waiting</div>
+      </div>
+      <div class="agent-card" id="card-marketing" data-agent="marketing">
+        <span class="agent-icon">📢</span>
+        <div class="agent-name">Marketing</div>
+        <div class="agent-status-badge" id="badge-marketing">Waiting</div>
+      </div>
+      <div class="agent-card" id="card-presentation" data-agent="presentation">
+        <span class="agent-icon">📄</span>
+        <div class="agent-name">Pitch Deck</div>
+        <div class="agent-status-badge" id="badge-presentation">Waiting</div>
+      </div>
+    </div>
+
+    <div class="pipeline-connector">
+      <div class="connector-line"></div>
+      <div class="connector-dot"></div>
+      <span id="currentAgentLabel" style="color:var(--text-muted);font-size:13px;">Starting pipeline...</span>
+      <div class="connector-dot"></div>
+      <div class="connector-line"></div>
+    </div>
+  </section>
+
+  <!-- ─── RESULTS ────────────────────────────────────────────────────── -->
+  <section id="results-section">
+    <h2 class="section-heading">✅ Your Startup Plan is Ready</h2>
+    <p class="section-sub">6 AI agents have analyzed your idea. Explore each section below.</p>
+
+    <!-- Tab bar -->
+    <div class="tabs-bar" role="tablist">
+      <button class="tab-btn active" id="tab-research" onclick="switchTab('research')" role="tab">🔍 Research</button>
+      <button class="tab-btn" id="tab-strategy" onclick="switchTab('strategy')" role="tab">💼 Strategy</button>
+      <button class="tab-btn" id="tab-finance" onclick="switchTab('finance')" role="tab">📊 Finance</button>
+      <button class="tab-btn" id="tab-tech" onclick="switchTab('tech')" role="tab">💻 Tech</button>
+      <button class="tab-btn" id="tab-marketing" onclick="switchTab('marketing')" role="tab">📢 Marketing</button>
+      <button class="tab-btn" id="tab-presentation" onclick="switchTab('presentation')" role="tab">🎯 Pitch Deck</button>
+    </div>
+
+    <!-- Research tab -->
+    <div class="tab-pane active" id="pane-research">
+      <div class="result-card">
+        <div class="result-content" id="content-research">
+          <div class="placeholder-lines">
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strategy tab -->
+    <div class="tab-pane" id="pane-strategy">
+      <div class="result-card">
+        <div class="result-content" id="content-strategy">
+          <div class="placeholder-lines">
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finance tab -->
+    <div class="tab-pane" id="pane-finance">
+      <div class="result-card">
+        <div class="result-content" id="content-finance">
+          <div class="placeholder-lines">
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech tab -->
+    <div class="tab-pane" id="pane-tech">
+      <div class="result-card">
+        <div class="result-content" id="content-tech">
+          <div class="placeholder-lines">
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marketing tab -->
+    <div class="tab-pane" id="pane-marketing">
+      <div class="result-card">
+        <div class="result-content" id="content-marketing">
+          <div class="placeholder-lines">
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+            <div class="shimmer-placeholder"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pitch Deck tab -->
+    <div class="tab-pane" id="pane-presentation">
+      <div class="result-card">
+        <div id="deck-loading" class="placeholder-lines">
+          <div class="shimmer-placeholder"></div>
+          <div class="shimmer-placeholder"></div>
+          <div class="shimmer-placeholder"></div>
+        </div>
+        <div class="deck-container" id="deck-container" style="display:none;">
+          <div id="deck-slides"></div>
+          <div class="deck-nav">
+            <button class="deck-nav-btn" id="prevSlide" onclick="changeSlide(-1)">← Prev</button>
+            <div class="deck-progress" id="deckProgress"></div>
+            <button class="deck-nav-btn" id="nextSlide" onclick="changeSlide(1)">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-note">
+    Built with <span>Gemini AI</span> · 6 autonomous agents · Multi-Agent Startup Generator
+  </footer>
+
+</div>
+
+<!-- Markdown renderer (marked.js) -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
