@@ -1,10 +1,8 @@
 from openai import OpenAI
 
-GROK_BASE_URL = "https://api.x.ai/v1"
-GROK_MODEL = "grok-3"
 
-def run_marketing_agent(idea: str, research_output: str, strategy_output: str, api_key: str):
-    client = OpenAI(api_key=api_key, base_url=GROK_BASE_URL)
+def run_marketing_agent(idea: str, research_output: str, strategy_output: str, api_key: str, base_url: str, model_name: str):
+    client = OpenAI(api_key=api_key, base_url=base_url)
     prompt = f"""You are a Chief Marketing Officer. Create a complete marketing plan for:
 
 **Business Idea:** "{idea}"
@@ -40,7 +38,7 @@ Loyalty programs, referral schemes, re-engagement.
 Monthly budget recommendation + key metrics (CAC, LTV, CTR)."""
 
     stream = client.chat.completions.create(
-        model=GROK_MODEL,
+        model=model_name,
         messages=[{"role": "user", "content": prompt}],
         stream=True,
     )

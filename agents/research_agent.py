@@ -1,13 +1,11 @@
 from openai import OpenAI
 
-GROK_BASE_URL = "https://api.x.ai/v1"
-GROK_MODEL = "grok-3"
 
 def make_client(api_key: str) -> OpenAI:
-    return OpenAI(api_key=api_key, base_url=GROK_BASE_URL)
+    return OpenAI(api_key=api_key, base_url=base_url)
 
-def run_research_agent(idea: str, api_key: str):
-    client = make_client(api_key)
+def run_research_agent(idea: str, api_key: str, base_url: str, model_name: str):
+    client = OpenAI(api_key=api_key, base_url=base_url)
     prompt = f"""You are a world-class Market Research Analyst. Conduct a comprehensive market research report for:
 
 "{idea}"
@@ -33,7 +31,7 @@ Summarize the biggest opportunity and why NOW is the right time.
 Be specific, data-driven, and actionable. Use emojis for visual appeal."""
 
     stream = client.chat.completions.create(
-        model=GROK_MODEL,
+        model=model_name,
         messages=[{"role": "user", "content": prompt}],
         stream=True,
     )

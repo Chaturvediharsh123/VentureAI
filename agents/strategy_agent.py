@@ -1,10 +1,8 @@
 from openai import OpenAI
 
-GROK_BASE_URL = "https://api.x.ai/v1"
-GROK_MODEL = "grok-3"
 
-def run_strategy_agent(idea: str, research_output: str, api_key: str):
-    client = OpenAI(api_key=api_key, base_url=GROK_BASE_URL)
+def run_strategy_agent(idea: str, research_output: str, api_key: str, base_url: str, model_name: str):
+    client = OpenAI(api_key=api_key, base_url=base_url)
     prompt = f"""You are a seasoned Business Strategy Consultant (ex-McKinsey). Create a comprehensive business strategy for:
 
 **Business Idea:** "{idea}"
@@ -33,7 +31,7 @@ Phase 1 (0-3 months), Phase 2 (3-12 months), Phase 3 (Year 2+).
 Be strategic, concrete, and use emojis."""
 
     stream = client.chat.completions.create(
-        model=GROK_MODEL,
+        model=model_name,
         messages=[{"role": "user", "content": prompt}],
         stream=True,
     )

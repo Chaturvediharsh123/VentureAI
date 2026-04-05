@@ -1,10 +1,8 @@
 from openai import OpenAI
 
-GROK_BASE_URL = "https://api.x.ai/v1"
-GROK_MODEL = "grok-3"
 
-def run_presentation_agent(idea: str, all_outputs: str, api_key: str):
-    client = OpenAI(api_key=api_key, base_url=GROK_BASE_URL)
+def run_presentation_agent(idea: str, all_outputs: str, api_key: str, base_url: str, model_name: str):
+    client = OpenAI(api_key=api_key, base_url=base_url)
     prompt = f"""You are a world-class startup pitch deck writer (Y Combinator, Sequoia). Create a 10-slide pitch deck for:
 
 **Business Idea:** "{idea}"
@@ -36,7 +34,7 @@ The 10 slides:
 Return ONLY the JSON array."""
 
     stream = client.chat.completions.create(
-        model=GROK_MODEL,
+        model=model_name,
         messages=[{"role": "user", "content": prompt}],
         stream=True,
     )

@@ -45,14 +45,30 @@
       ></textarea>
 
       <div class="api-key-row">
+        <select id="apiProvider" class="api-key-input" style="flex: 0.8;" onchange="updateProvider()">
+          <option value="grok">Grok (xAI) — grok-3</option>
+          <option value="openai">OpenAI — gpt-4o</option>
+          <option value="gemini">Gemini — 2.0 Flash</option>
+          <option value="deepseek">DeepSeek — chat</option>
+          <option value="openrouter">OpenRouter</option>
+          <option value="custom">Custom Endpoint</option>
+        </select>
         <input
           id="apiKey"
-          type="text"
+          type="password"
           class="api-key-input"
-          placeholder="🔑 Grok API Key (xai-...)"
+          placeholder="🔑 Paste API Key here..."
           autocomplete="new-password"
           spellcheck="false"
         />
+      </div>
+
+      <div class="api-key-row" id="customApiRow" style="display:none; margin-top:12px;">
+        <input id="baseUrl" type="text" class="api-key-input" placeholder="🌐 Base URL (e.g. https://api.openai.com/v1)" spellcheck="false" />
+        <input id="modelName" type="text" class="api-key-input" placeholder="🤖 Model Name (e.g. gpt-4o)" spellcheck="false" />
+      </div>
+
+      <div style="margin-top: 24px; display: flex; justify-content: flex-end;">
         <button id="buildBtn" class="btn-build" onclick="startBuild()">
           🚀 Build My Startup
         </button>

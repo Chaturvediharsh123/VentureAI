@@ -41,9 +41,11 @@ def generate():
     body = request.get_json()
     idea = (body or {}).get("idea", "").strip()
     api_key = (body or {}).get("apiKey", "").strip()
+    base_url = (body or {}).get("baseUrl", "").strip()
+    model = (body or {}).get("model", "").strip()
 
-    if not idea or not api_key:
-        return {"error": "Business idea and API key are required."}, 400
+    if not idea or not api_key or not base_url or not model:
+        return {"error": "Idea, API key, Base URL, and Model are required."}, 400
 
     def stream():
         outputs = {}
@@ -51,7 +53,7 @@ def generate():
             # ── Agent 1: Research ──────────────────────────────────────────
             yield sse_event("agentStart", {"agent": "research", "label": "Research Agent"})
             research_text = ""
-            for chunk in run_research_agent(idea, api_key):
+            for chunk in run_research_agent(idea, api_key, base_url, model):
                 research_text += chunk
                 yield sse_chunk("research", chunk)
             outputs["research"] = research_text
@@ -60,7 +62,7 @@ def generate():
             # ── Agent 2: Strategy ─────────────────────────────────────────
             yield sse_event("agentStart", {"agent": "strategy", "label": "Business Strategy Agent"})
             strategy_text = ""
-            for chunk in run_strategy_agent(idea, research_text, api_key):
+            for chunk in run_strategy_agent(idea, research_text, api_key, base_url, model):
                 strategy_text += chunk
                 yield sse_chunk("strategy", chunk)
             outputs["strategy"] = strategy_text
@@ -69,7 +71,7 @@ def generate():
             # ── Agent 3: Finance ──────────────────────────────────────────
             yield sse_event("agentStart", {"agent": "finance", "label": "Finance Agent"})
             finance_text = ""
-            for chunk in run_finance_agent(idea, strategy_text, api_key):
+            for chunk in run_finance_agent(idea, strategy_text, api_key, base_url, model):
                 finance_text += chunk
                 yield sse_chunk("finance", chunk)
             outputs["finance"] = finance_text
@@ -78,7 +80,7 @@ def generate():
             # ── Agent 4: Tech ─────────────────────────────────────────────
             yield sse_event("agentStart", {"agent": "tech", "label": "Tech Agent"})
             tech_text = ""
-            for chunk in run_tech_agent(idea, strategy_text, api_key):
+            for chunk in run_tech_agent(idea, strategy_text, api_key, base_url, model):
                 tech_text += chunk
                 yield sse_chunk("tech", chunk)
             outputs["tech"] = tech_text
@@ -87,7 +89,7 @@ def generate():
             # ── Agent 5: Marketing ────────────────────────────────────────
             yield sse_event("agentStart", {"agent": "marketing", "label": "Marketing Agent"})
             marketing_text = ""
-            for chunk in run_marketing_agent(idea, research_text, strategy_text, api_key):
+            for chunk in run_marketing_agent(idea, research_text, strategy_text, api_key, base_url, model):
                 marketing_text += chunk
                 yield sse_chunk("marketing", chunk)
             outputs["marketing"] = marketing_text
@@ -99,7 +101,7 @@ def generate():
                 research_text, strategy_text, finance_text, tech_text, marketing_text
             ])
             presentation_text = ""
-            for chunk in run_presentation_agent(idea, all_context, api_key):
+            for chunk in run_presentation_agent(idea, all_context, api_key, base_url, model):
                 presentation_text += chunk
                 yield sse_chunk("presentation", chunk)
             outputs["presentation"] = presentation_text

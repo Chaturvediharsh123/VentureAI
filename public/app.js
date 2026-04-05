@@ -4,6 +4,27 @@ let currentSlide = 0;
 let slides = [];
 let isBuilding = false;
 
+// ─── Provider Configuration ──────────────────────────────────────────────────
+const PRESETS = {
+  grok: { baseUrl: 'https://api.x.ai/v1', model: 'grok-3' },
+  openai: { baseUrl: 'https://api.openai.com/v1', model: 'gpt-4o' },
+  gemini: { baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai/', model: 'gemini-2.0-flash' },
+  deepseek: { baseUrl: 'https://api.deepseek.com', model: 'deepseek-chat' },
+  openrouter: { baseUrl: 'https://openrouter.ai/api/v1', model: 'meta-llama/llama-3.3-70b-instruct' }
+};
+
+function updateProvider() {
+  const p = document.getElementById('apiProvider').value;
+  const customRow = document.getElementById('customApiRow');
+  if (p === 'custom') {
+    customRow.style.display = 'flex';
+  } else {
+    customRow.style.display = 'none';
+    document.getElementById('baseUrl').value = PRESETS[p].baseUrl;
+    document.getElementById('modelName').value = PRESETS[p].model;
+  }
+}
+
 // ─── Load API key from server env on startup ───────────────────────────────
 async function loadConfig() {
   try {
@@ -13,7 +34,7 @@ async function loadConfig() {
       document.getElementById('apiKey').value = data.apiKey;
     }
   } catch (e) {
-    // silently ignore — user can type their key manually
+    // silently ignore
   }
 }
 
@@ -183,9 +204,12 @@ async function startBuild() {
 
   const idea = document.getElementById('businessIdea').value.trim();
   const apiKey = document.getElementById('apiKey').value.trim();
+  const baseUrl = document.getElementById('baseUrl').value.trim();
+  const model = document.getElementById('modelName').value.trim();
 
   if (!idea) { showToast('⚠️ Please enter your business idea first.'); return; }
-  if (!apiKey) { showToast('⚠️ Please enter your Gemini API key.'); return; }
+  if (!apiKey) { showToast('⚠️ Please enter an API key.'); return; }
+  if (!baseUrl || !model) { showToast('⚠️ Base URL and Model Name are required.'); return; }
 
   isBuilding = true;
   const btn = document.getElementById('buildBtn');
@@ -214,7 +238,7 @@ async function startBuild() {
     const response = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ idea, apiKey }),
+      body: JSON.stringify({ idea, apiKey, baseUrl, model }),
     });
 
     if (!response.ok) {
@@ -259,6 +283,7 @@ async function startBuild() {
 
 // ─── SSE Event handler ─────────────────────────────────────────────────────
 // ─── Init ─────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', updateProvider);
 loadConfig();
 
 function handleEvent(event, data) {
