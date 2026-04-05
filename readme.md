@@ -41,23 +41,71 @@ VentureAI solves this by using a **multi-agent AI architecture**, where each age
 
 ---
 
-## 🧩 System Architecture
+## 📁 Project Structure
 
 ```
-User Input (Startup Idea)
-        ↓
-Multi-Agent System
-        ↓
-├── Research Agent
-├── Business Strategy Agent
-├── Finance Agent
-├── Tech Agent
-├── Marketing Agent
-        ↓
-Final Output (Startup Blueprint)
+multiagentfrox/
+├── server.py                  # Flask server with SSE streaming
+├── requirements.txt           # Flask, openai, python-dotenv
+├── .env                       # API keys (not pushed to GitHub)
+│
+├── agents/
+│   ├── __init__.py
+│   ├── research_agent.py      # Market research agent
+│   ├── strategy_agent.py      # Business strategy agent
+│   ├── finance_agent.py       # Financial projections agent
+│   ├── tech_agent.py          # Tech architecture agent
+│   ├── marketing_agent.py     # Marketing & growth agent
+│   └── presentation_agent.py  # Pitch deck generation agent
+│
+└── public/
+    ├── index.html             # Main UI (Single Page Application)
+    ├── style.css              # Glassmorphism dark UI design
+    └── app.js                 # SSE client & real-time updates
 ```
 
 ---
+
+## 🧠 Multi-Agent Design
+
+VentureAI is powered by a modular multi-agent system, where each agent is responsible for a specific domain:
+
+* 🔍 **Research Agent** → Market insights & competitor analysis
+* 💼 **Strategy Agent** → Business model & execution plan
+* 💰 **Finance Agent** → Cost, revenue & ROI projections
+* 💻 **Tech Agent** → System architecture & tech stack
+* 📢 **Marketing Agent** → Growth & user acquisition strategy
+* 📄 **Presentation Agent** → Auto-generated pitch deck
+
+Each agent works independently and contributes to a unified startup blueprint.
+
+---
+
+## ⚡ Real-Time Processing
+
+* Uses **Server-Sent Events (SSE)** for live streaming responses
+* Users can see outputs being generated **in real-time**
+* Improves interactivity and demo experience
+
+---
+
+## 🎨 Frontend Experience
+
+* 🌑 Modern **dark glassmorphism UI**
+* ⚡ Single Page Application (SPA)
+* 📊 Tab-based structured output
+* 🎥 Live pitch deck preview
+
+---
+
+## 🔐 Environment Setup
+
+Create a `.env` file in the root directory:
+
+```
+API_KEY=your_api_key_here
+```
+
 
 ## 🔄 Workflow
 
