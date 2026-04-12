@@ -1,16 +1,16 @@
-# 🚀 VentureAI
+#  VentureAI
 
 ### *From Idea to Startup — Instantly*
 
 ---
 
-## 🧠 Overview
+##  Overview
 
 **VentureAI** is an autonomous multi-agent AI system that transforms a simple idea into a complete, structured startup plan. It simulates the roles of multiple experts — from market analysts to financial planners — to generate actionable business insights in minutes.
 
 ---
 
-## ❗ Problem Statement
+##  Problem Statement
 
 Building a startup is a complex and time-consuming process. It requires:
 
@@ -23,7 +23,7 @@ Most aspiring founders lack access to structured guidance and expert-level insig
 
 ---
 
-## 💡 Solution
+##  Solution
 
 VentureAI solves this by using a **multi-agent AI architecture**, where each agent performs a specialized task. The system collaborates internally to generate a complete startup blueprint — reducing weeks of effort into minutes.
 
@@ -31,17 +31,17 @@ VentureAI solves this by using a **multi-agent AI architecture**, where each age
 
 ## ⚙️ Key Features
 
-* 🤖 **Multi-Agent AI System**
-* 📊 **Market Research & Competitor Analysis**
-* 💼 **Business Strategy & Model Generation**
-* 💰 **Financial Planning & ROI Estimation**
-* 💻 **Tech Stack & Architecture Suggestions**
-* 📢 **Marketing & Growth Strategy**
-* 🧠 **Investor Mode (Risk & Feasibility Analysis)**
+*  **Multi-Agent AI System**
+*  **Market Research & Competitor Analysis**
+*  **Business Strategy & Model Generation**
+*  **Financial Planning & ROI Estimation**
+*  **Tech Stack & Architecture Suggestions**
+*  **Marketing & Growth Strategy**
+*  **Investor Mode (Risk & Feasibility Analysis)**
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 multiagentfrox/
